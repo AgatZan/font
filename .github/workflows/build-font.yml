@@ -1,0 +1,115 @@
+name: Font Build
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+jobs:
+  build:
+    name: Build ${{ matrix.fontName }} font
+    if: github.repository == 'AgatZan/font'
+    runs-on: ubuntu-latest
+    env:
+      GH_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        fontName: ["IoZanCode"]
+
+    steps:
+      # Checkout repository into `iosevka` sub directory
+      - uses: actions/checkout@v4
+        with:
+          path: iosevka
+      - name: Install Iosevka
+        shell: bash
+        run: |
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install ttfautohint
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ttfautohint
+
+      - name: Build Font ${{ matrix.fontName }}
+        shell: bash
+        working-directory: iosevka
+        run: |
+          git clone --depth 1 https://github.com/be5invis/Iosevka.git
+          ls -la
+          # npm install
+          # npm run build -- ttf::${{ matrix.fontName }}
+          # zip -r ${{ matrix.fontName }}.zip dist/${{ matrix.fontName }}/TTF/
+     
+      # - name: Setup core dependencies
+      #   run: |
+      #     sudo apt update -y -q
+      #     sudo apt install software-properties-common -y -q
+      #     sudo apt install python3-fontforge -y -q
+      #     sudo apt install fuse -y -q
+      # - name: Fetch FontForge
+      #   run: |
+      #     curl -L "https://github.com/fontforge/fontforge/releases/download/20230101/FontForge-2023-01-01-a1dad3e-x86_64.AppImage" \
+      #       --output fontforge
+      #     chmod u+x fontforge
+      #     echo Try appimage
+      #     ./fontforge --version
+      #     export PATH=`pwd`:$PATH
+      #     echo "PATH=$PATH" >> $GITHUB_ENV
+      #     echo Try appimage with path
+      #     fontforge --version
+      # - name: Verify setup
+      #   run: |
+      #     fontforge --version
+      #     fontforge --version 2>&1 | grep libfontforge | awk '{print $NF}'
+      # - name: Build NerdFont ${{ matrix.fontName }}
+      #   shell: bash
+      #   run: |
+      #     wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FontPatcher.zip
+      #     unzip FontPatcher.zip -d FontPatcher/
+      #     fontforge --script `pwd`/FontPatcher/font-patcher --version
+      #     mkdir iosevka/dist/${{ matrix.fontName }}/NF/
+      #     for file in `pwd`/iosevka/dist/${{ matrix.fontName }}/TTF/*.ttf
+      #     do
+      #       fontforge --script `pwd`/FontPatcher/font-patcher -c --careful $file -out `pwd`/iosevka/dist/${{ matrix.fontName }}/NF
+      #     done
+          
+      #     zip -r ${{ matrix.fontName }}NF.zip iosevka/dist/${{ matrix.fontName }}/NF/
+      # - name: Release
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{ matrix.fontName }}
+      #     path: iosevka/${{ matrix.fontName }}.zip
+      #     retention-days: 1
+      # - name: Release ${{ matrix.fontName }}NF
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{ matrix.fontName }}NF
+      #     path: ${{ matrix.fontName }}NF.zip
+      #     retention-days: 1
+      # - uses: actions/download-artifact@v4
+      # - name: Generate SHA256 checksums ${{ matrix.fontName }}
+      #   run: |
+      #     sha256sum iosevka/${{ matrix.fontName }}.zip > ${{ matrix.fontName }}.zip.sha256sum
+      #     echo "SHA_IOZAN=$(cat ${{ matrix.fontName }}.sha256sum)" >> $GITHUB_ENV
+      # - name: Generate SHA256 checksums NF ${{ matrix.fontName }}
+      #   run: |
+      #     sha256sum ${{ matrix.fontName }}NF.zip > ${{ matrix.fontName }}NF.zip.sha256sum
+      #     echo "SHA_IOZAN_NF=$(cat ${{ matrix.fontName }}NF.zip.sha256sum)" >> $GITHUB_ENV
+      #     echo "$GIHUB_ENV" > ${{ github.workspace }}-CHANGELOG.txt
+      # - name: Upload zip ${{ matrix.fontName }}
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     body_path: ${{ github.workspace }}-CHANGELOG.txt
+      #     files: |
+      #       ${{ matrix.fontName }}NF.zip
+      #       ${{ matrix.fontName }}.zip.sha256sum
+      #       iosevka/${{ matrix.fontName }}.zip
+      #       ${{ matrix.fontName }}NF.zip.sha256sum
