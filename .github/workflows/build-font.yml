@@ -3,7 +3,7 @@ name: Font Build
 on:
   push:
     tags:
-      - "*.*.*"
+      - "v*.*.*"
 jobs:
   build:
     name: Build ${{ matrix.fontName }} font
