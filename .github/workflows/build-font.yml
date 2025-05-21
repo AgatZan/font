@@ -19,7 +19,6 @@ jobs:
       matrix:
         fontName: ["IoZanCode"]
     steps:
-      # Checkout repository into `iosevka` sub directory
       - uses: actions/checkout@v4
         with:
           path: iosevka
@@ -30,13 +29,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-
       - name: Install ttfautohint
         shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends ttfautohint
-
       - name: Build Font ${{ matrix.fontName }}
         shell: bash
         working-directory: iosevka
@@ -68,9 +65,6 @@ jobs:
           export PATH=`pwd`:$PATH
           echo "PATH=$PATH" >> $GITHUB_ENV
           echo Try appimage with path
-          fontforge --version
-      - name: Verify setup
-        run: |
           fontforge --version
           fontforge --version 2>&1 | grep libfontforge | awk '{print $NF}'
       - name: Build NerdFont ${{ matrix.fontName }}
@@ -114,18 +108,20 @@ jobs:
         run: |
           ls -la
           sha256sum ${{ matrix.fontName }}.zip > ${{ matrix.fontName }}.zip.sha256sum
-          echo "SHA_IOZAN=$(cat ${{ matrix.fontName }}.sha256sum)" >> $GITHUB_ENV
+          cat ${{ matrix.fontName }}.zip.sha256sum.sha256sum
+          cat ${{ matrix.fontName }}.zip.sha256sum.sha256sum >> $GITHUB_ENV
           sha256sum ${{ matrix.fontName }}NF.zip > ${{ matrix.fontName }}NF.zip.sha256sum
-          echo "SHA_IOZAN_NF=$(cat ${{ matrix.fontName }}NF.zip.sha256sum)" >> $GITHUB_ENV
-          
+          cat ${{ matrix.fontName }}NF.zip.sha256sum.sha256sum
+          cat ${{ matrix.fontName }}NF.zip.sha256sum.sha256sum >> $GITHUB_ENV
+          echo $GITHUB_ENV
           echo "$GITHUB_ENV" > ${{ github.workspace }}-CHANGELOG.txt
       - name: Upload zip ${{ matrix.fontName }}
         uses: softprops/action-gh-release@v2
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            ${{ matrix.fontName }}NF.zip
-            ${{ matrix.fontName }}NF.zip.sha256sum           
-            ${{ matrix.fontName }}.zip
-            ${{ matrix.fontName }}.zip.sha256sum 
+            iosevka/${{ matrix.fontName }}NF.zip
+            iosevka/${{ matrix.fontName }}NF.zip.sha256sum           
+            iosevka/${{ matrix.fontName }}.zip
+            iosevka/${{ matrix.fontName }}.zip.sha256sum 
 
