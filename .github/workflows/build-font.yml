@@ -109,13 +109,15 @@ jobs:
           retention-days: 1
       - uses: actions/download-artifact@v4
       - name: Generate SHA256 checksums ${{ matrix.fontName }}
+        shell: bash
+        working-directory: iosevka
         run: |
-          sha256sum iosevka/${{ matrix.fontName }}.zip > ${{ matrix.fontName }}.zip.sha256sum
+          ls -la
+          sha256sum ${{ matrix.fontName }}.zip > ${{ matrix.fontName }}.zip.sha256sum
           echo "SHA_IOZAN=$(cat ${{ matrix.fontName }}.sha256sum)" >> $GITHUB_ENV
-      - name: Generate SHA256 checksums NF ${{ matrix.fontName }}
-        run: |
           sha256sum ${{ matrix.fontName }}NF.zip > ${{ matrix.fontName }}NF.zip.sha256sum
           echo "SHA_IOZAN_NF=$(cat ${{ matrix.fontName }}NF.zip.sha256sum)" >> $GITHUB_ENV
+          
           echo "$GITHUB_ENV" > ${{ github.workspace }}-CHANGELOG.txt
       - name: Upload zip ${{ matrix.fontName }}
         uses: softprops/action-gh-release@v2
