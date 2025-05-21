@@ -81,7 +81,8 @@ jobs:
           echo `pwd`/iosevka/dist/${{ matrix.fontName }}/NF
           for file in `pwd`/Iosevka/dist/${{ matrix.fontName }}/TTF/*.ttf
           do
-            fontforge --script `pwd`/FontPatcher/font-patcher -c --careful $file -out `pwd`/Iosevka/dist/${{ matrix.fontName }}/NF
+            fontforge --script `pwd`/FontPatcher/font-patcher -c --careful $file -out `pwd`/Iosevka/dist/${{ matrix.fontName }}/NF > /dev/null
+            echo $file "OK"
           done   
           echo "AFTER BUILD ${{ matrix.fontName }}"
           ls -la
