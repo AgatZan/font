@@ -113,7 +113,9 @@ exportGlyphNames = false
     lig-single-arrow-bar = "without-notch"
 
   [buildPlans.IoZanCode.ligations]
-  inherits = "ml"
+  inherits = "dlig"
+  disables = ["exeq", "exeqeqeq", "exeqeq", "llggeq", "minus-minus", "minus-minus-minus"]
+  enables = ["lteq-separate", "eqlt-separate", "gteq-separate"]
 
 [buildPlans.IoZanCode.weights.Regular]
 shape = 400
