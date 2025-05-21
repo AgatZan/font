@@ -50,6 +50,7 @@ jobs:
           npm run build -- ttf::${{ matrix.fontName }}
           cd ..
           zip -r ${{ matrix.fontName }}.zip Iosevka/dist/${{ matrix.fontName }}/TTF/
+          echo "GENERATE ${{ matrix.fontName }}"
           ls -la
      
       - name: Setup core dependencies
@@ -80,13 +81,18 @@ jobs:
           wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FontPatcher.zip
           unzip FontPatcher.zip -d FontPatcher/
           fontforge --script `pwd`/FontPatcher/font-patcher --version
+          echo "BEFORE BUILD ${{ matrix.fontName }}"
           ls -la
           mkdir Iosevka/dist/${{ matrix.fontName }}/NF/
+          echo `pwd`/Iosevka/dist/${{ matrix.fontName }}/NF
+          echo `pwd`/iosevka/dist/${{ matrix.fontName }}/NF
           for file in `pwd`/Iosevka/dist/${{ matrix.fontName }}/TTF/*.ttf
           do
-            fontforge --script `pwd`/FontPatcher/font-patcher -c --careful $file -out `pwd`/iosevka/dist/${{ matrix.fontName }}/NF
-          done          
+            fontforge --script `pwd`/FontPatcher/font-patcher -c --careful $file -out `pwd`/Iosevka/dist/${{ matrix.fontName }}/NF
+          done   
+          echo "AFTER BUILD ${{ matrix.fontName }}"
           ls -la
+          ls -la iosevka/dist/${{ matrix.fontName }}/NF/
           ls -la Iosevka/dist/${{ matrix.fontName }}/NF/
           zip -r ${{ matrix.fontName }}NF.zip Iosevka/dist/${{ matrix.fontName }}/NF/
       - name: Release
