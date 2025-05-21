@@ -109,11 +109,11 @@ jobs:
         run: |
           ls -la
           sha256sum ${{ matrix.fontName }}.zip > ${{ matrix.fontName }}.zip.sha256sum
-          cat ${{ matrix.fontName }}.zip.sha256sum.sha256sum
-          cat ${{ matrix.fontName }}.zip.sha256sum.sha256sum >> $GITHUB_ENV
+          cat ${{ matrix.fontName }}.zip.sha256sum
+          cat ${{ matrix.fontName }}.zip.sha256sum >> $GITHUB_ENV
           sha256sum ${{ matrix.fontName }}NF.zip > ${{ matrix.fontName }}NF.zip.sha256sum
-          cat ${{ matrix.fontName }}NF.zip.sha256sum.sha256sum
-          cat ${{ matrix.fontName }}NF.zip.sha256sum.sha256sum >> $GITHUB_ENV
+          cat ${{ matrix.fontName }}NF.zip.sha256sum
+          cat ${{ matrix.fontName }}NF.zip.sha256sum >> $GITHUB_ENV
           echo $GITHUB_ENV
           echo "$GITHUB_ENV" > ${{ github.workspace }}-CHANGELOG.txt
       - name: Upload zip ${{ matrix.fontName }}
