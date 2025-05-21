@@ -110,12 +110,15 @@ jobs:
           ls -la
           sha256sum ${{ matrix.fontName }}.zip > ${{ matrix.fontName }}.zip.sha256sum
           cat ${{ matrix.fontName }}.zip.sha256sum
-          cat ${{ matrix.fontName }}.zip.sha256sum >> $GITHUB_ENV
+          cat ${{ matrix.fontName }}.zip.sha256sum >> $SHA
           sha256sum ${{ matrix.fontName }}NF.zip > ${{ matrix.fontName }}NF.zip.sha256sum
           cat ${{ matrix.fontName }}NF.zip.sha256sum
-          cat ${{ matrix.fontName }}NF.zip.sha256sum >> $GITHUB_ENV
-          echo $GITHUB_ENV
-          echo "$GITHUB_ENV" > ${{ github.workspace }}-CHANGELOG.txt
+          cat ${{ matrix.fontName }}NF.zip.sha256sum >> $SHA
+          ls -la
+          echo "VAR:" $SHA
+          echo $SHA > ${{ github.workspace }}-CHANGELOG.txt
+          ls -la
+          echo "END"
       - name: Upload zip ${{ matrix.fontName }}
         uses: softprops/action-gh-release@v2
         with:
