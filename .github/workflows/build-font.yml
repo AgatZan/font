@@ -92,7 +92,6 @@ jobs:
           done   
           echo "AFTER BUILD ${{ matrix.fontName }}"
           ls -la
-          ls -la iosevka/dist/${{ matrix.fontName }}/NF/
           ls -la Iosevka/dist/${{ matrix.fontName }}/NF/
           zip -r ${{ matrix.fontName }}NF.zip Iosevka/dist/${{ matrix.fontName }}/NF/
       - name: Release
