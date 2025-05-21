@@ -51,7 +51,8 @@ jobs:
           cd ..
           ls -la Iosevka
           ls -la Iosevka/dist
-          ls -la Iosevka/dist/${ matrix.fontName }
+          ls -la Iosevka/dist/${{ matrix.fontName }}
+          ls -la Iosevka/dist/${{ matrix.fontName }}/TTF
           zip -r ${{ matrix.fontName }}.zip Iosevka/dist/${{ matrix.fontName }}/TTF/
      
       # - name: Setup core dependencies
