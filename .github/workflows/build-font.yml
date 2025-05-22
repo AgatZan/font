@@ -108,15 +108,15 @@ jobs:
         working-directory: iosevka
         run: |
           ls -la
+          SHA_FILE="${{ github.workspace }}-CHANGELOG.txt"
+          touch $SHA_FILE
           sha256sum ${{ matrix.fontName }}.zip > ${{ matrix.fontName }}.zip.sha256sum
           cat ${{ matrix.fontName }}.zip.sha256sum
-          cat ${{ matrix.fontName }}.zip.sha256sum >> $SHA
+          cat ${{ matrix.fontName }}.zip.sha256sum >> $SHA_FILE
           sha256sum ${{ matrix.fontName }}NF.zip > ${{ matrix.fontName }}NF.zip.sha256sum
           cat ${{ matrix.fontName }}NF.zip.sha256sum
-          cat ${{ matrix.fontName }}NF.zip.sha256sum >> $SHA
-          ls -la
-          echo "VAR:" $SHA
-          echo $SHA > ${{ github.workspace }}-CHANGELOG.txt
+          cat ${{ matrix.fontName }}NF.zip.sha256sum >> $SHA_FILE
+          cat $SHA_FILE
           ls -la
           echo "END"
       - name: Upload zip ${{ matrix.fontName }}
