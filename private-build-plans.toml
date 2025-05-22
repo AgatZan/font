@@ -24,11 +24,12 @@ exportGlyphNames = false
     capital-d = "standard-serifless"
     capital-f = "serifless"
     capital-g = "toothless-rounded-serifless-hooked"
-    capital-i = "serifless"
+    capital-i = "short-serifed"
     capital-j = "flat-hook-serifless"
     capital-k = "straight-serifless"
     capital-l = "serifless"
     capital-m = "hanging-serifless"
+    capital-t = "serifless"
     capital-w = "straight-serifless"
     a = "double-storey-hook-inward-serifed-serifed"
     b = "toothless-rounded-serifless"
@@ -37,7 +38,7 @@ exportGlyphNames = false
     e = "flat-crossbar"
     f = "flat-hook-serifless"
     h = "straight-serifless"
-    i = "serifless"
+    i = "serifed-flat-tailed"
     j = "flat-hook-serifless"
     k = "symmetric-touching-serifless"
     l = "flat-tailed"
@@ -114,7 +115,7 @@ exportGlyphNames = false
 
   [buildPlans.IoZanCode.ligations]
   inherits = "dlig"
-  disables = ["exeq", "exeqeqeq", "exeqeq", "llggeq", "minus-minus", "minus-minus-minus"]
+  disables = ["lteq", "gteq", "exeq", "exeqeqeq", "exeqeq", "llggeq", "minus-minus", "minus-minus-minus"]
   enables = ["lteq-separate", "eqlt-separate", "gteq-separate"]
 
 [buildPlans.IoZanCode.weights.Regular]
